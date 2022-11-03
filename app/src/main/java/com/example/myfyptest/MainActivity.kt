@@ -76,9 +76,14 @@ class MainActivity : AppCompatActivity() {
 
         val menu = Menu
 
-//        val steak = Food("Steak",15.0,"Main",true)
-//        steak.addModifier(modifier1)
-//        steak.addModifier(modifier2)
+        val steak = Food("Steak",15.0,ProductTag.MAIN,true)
+        steak.addModifier(modifier1)
+        steak.addModifier(modifier2)
+
+        val foodObject = FoodObject("MA-0")
+
+        val order1 = Order("O-1")
+
 //        modifier1.selectItem(mediumWell)
 //        Log.d("MainActivity","Steak price = ${steak.totalPrice.value}")
 ////        modifier1.selectItem(wellDone)

@@ -7,20 +7,20 @@ object Menu {
     private val modifierItemDatabase = hashMapOf<String,ModifierItem>()
 
 
-    fun insertMenu(product : Food){
-        val id  =
-        productDatabase
-        productDatabase["A-01"] = product
+    fun insertMenu(product : Food) : String{
+        val id = product.productTag.tagIdHeader + "-" + productDatabase.size
+        productDatabase[id] = product
+        return id
     }
 
     fun insertModifier(modifier : Modifier) : String{
-        val id = "M-@{modifierDatabase.size}"
+        val id = "M-" + modifierDatabase.size
         modifierDatabase[id] = modifier
         return id
     }
 
     fun insertModifierItem(item : ModifierItem) : String{
-        val id = "MI-@{modifierItemDatabase.size}"
+        val id = "MI-" + modifierItemDatabase.size
         modifierItemDatabase[id] = item
         return id
     }

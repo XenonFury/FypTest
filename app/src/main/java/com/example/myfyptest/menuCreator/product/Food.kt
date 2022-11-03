@@ -1,15 +1,12 @@
 package com.example.myfyptest.menuCreator.product
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 
 const val TAG = "Food Class"
 
-class Food(foodId : String,
-           name: String,
+class Food(name: String,
            price: Double,
-           foodTag : ProductTagEnum,
+           productTag : ProductTag,
            isModifiable : Boolean) : Product("Food"),MenuInterface{
 
     override var _name: String = name
@@ -17,9 +14,9 @@ class Food(foodId : String,
             if (name.isNotBlank()) field = name
             else throw java.lang.Exception("Name must not be null")
         }
-    override var _productId: String = foodId
-    val productId : String
-        get() = _productId
+//    override var _productId: String = ""
+//    val productId : String
+//        get() = _productId
 
     val name : String
         get() = _name
@@ -32,9 +29,9 @@ class Food(foodId : String,
     val price : Double
         get() = _price
 
-    override var _foodTag = foodTag
-    val foodTag : ProductTagEnum
-        get() = _foodTag
+    override var _productTag = productTag
+    val productTag : ProductTag
+        get() = _productTag
 
     private var _allTimeSales: Int = 0
     val allTimeSales : Int

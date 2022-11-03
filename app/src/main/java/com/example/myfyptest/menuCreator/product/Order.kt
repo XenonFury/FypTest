@@ -1,6 +1,6 @@
 package com.example.myfyptest.menuCreator.product
 
-class Order : MenuInterface {
+class Order (orderId : String) : MenuInterface {
     private lateinit var menu : Menu
     private val orderList : HashMap<FoodObject,Int> =  hashMapOf()
 
