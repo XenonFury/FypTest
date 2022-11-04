@@ -25,7 +25,7 @@ object Menu {
         return id
     }
 
-    fun getProduct(keyId : String) : Any?{
+    fun getProduct(keyId : String) : Any? {
         return productDatabase[keyId]
     }
 

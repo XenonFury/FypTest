@@ -14,10 +14,6 @@ class Food(name: String,
             if (name.isNotBlank()) field = name
             else throw java.lang.Exception("Name must not be null")
         }
-//    override var _productId: String = ""
-//    val productId : String
-//        get() = _productId
-
     val name : String
         get() = _name
 
@@ -56,8 +52,8 @@ class Food(name: String,
             _modifierList = mutableListOf<String>()
     }
 
-    fun addModifier(modifier : Modifier){
-        _modifierList!!.add(menu.insertModifier(modifier))
+    fun addModifier(modifierId : String){
+        _modifierList!!.add(modifierId)
     }
 
     fun removeModifier(modifierId: String){

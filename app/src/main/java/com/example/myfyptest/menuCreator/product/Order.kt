@@ -1,8 +1,21 @@
 package com.example.myfyptest.menuCreator.product
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+
 class Order (orderId : String) : MenuInterface {
     private lateinit var menu : Menu
-    private val orderList : HashMap<FoodObject,Int> =  hashMapOf()
+    private val _orderList : HashMap<FoodObject,Int> =  hashMapOf()
+    val orderList : HashMap<FoodObject,Int>
+        get() = _orderList
+
+    @Transient
+    private var _foodSubtotal = MutableLiveData<Double>(0.0)
+    val foodSubtotal : LiveData<Double>
+        get() {
+            calculateFoodSubtotal()
+            return _foodSubtotal
+        }
 
     override fun setMenuDatabase() {
         menu = Menu
@@ -14,7 +27,7 @@ class Order (orderId : String) : MenuInterface {
     }
 
     fun selectProductModifierItem(product: FoodObject, modifierId: String, modifierItemId: String) : Boolean{
-        return if (!orderList.containsKey(product) && !product.food.isModifierItemInFood(modifierItemId,modifierId))
+        return if (!_orderList.containsKey(product) && !product.food.isModifierItemInFood(modifierItemId,modifierId))
             false
         else{
             product.addItem(modifierItemId,modifierId)
@@ -26,12 +39,12 @@ class Order (orderId : String) : MenuInterface {
         return product.removeItem(modifierItemId)
     }
 
-    fun calculateFoodPrice(productId: String) : Double{
+    fun calculateFoodSubtotal(){
         var sum = 0.0
-        for (item in orderList.keys){
-            sum += orderList[item]?.times(item.totalPrice.value!!) ?: 0.0
+        for (item in _orderList.keys){
+            sum += _orderList[item]?.times(item.totalPrice.value!!) ?: 0.0
         }
-        return sum
+        _foodSubtotal.value = sum
     }
 
 

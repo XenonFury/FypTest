@@ -45,44 +45,47 @@ class MainActivity : AppCompatActivity() {
                 .setAnchorView(R.id.fab)
                 .setAction("Action", null).show()
         }
+
+        val menu = Menu
+
         val database = Firebase.database("https://test-1d074-default-rtdb.asia-southeast1.firebasedatabase.app/")
         val myRef = database.getReference("messages")
         myRef.setValue("Hello, World!")
 
-        val myList : ArrayList<Int> = ArrayList<Int>(100)
-        repeat(100){
-            myList.add((1..100).random())
-        }
-        val ref1 = database.getReference().child("1")
-        ref1.setValue(myList)
+        val wellDone = menu.insertModifierItem(ModifierItem("Well done",2.0))
+        val mediumWell = menu.insertModifierItem(ModifierItem("Medium Well",1.5))
+        val rare = menu.insertModifierItem(ModifierItem("Rare",1.0))
 
-        val wellDone = ModifierItem("Well done",2.0)
-        val mediumWell = ModifierItem("Medium Well",1.5)
-        val rare = ModifierItem("Rare",1.0)
+        val withSides = menu.insertModifierItem(ModifierItem("Sides",5.0))
+        val withoutSides = menu.insertModifierItem(ModifierItem ("No Sides",0.0))
 
-        val withSides = ModifierItem("Sides",5.0)
-        val withoutSides = ModifierItem ("No Sides",0.0)
-
-        val modifier2 = Modifier("Sides", false,true)
+        val modifier2 = menu.insertModifier(Modifier("Sides", false,true)
             .addItem(withSides)
             .addItem(withoutSides)
-            .build()
+            .build())
 
-        val modifier1 = Modifier("Wellness",false,true)
+        val modifier1 = menu.insertModifier(Modifier("Wellness",false,true)
             .addItem(wellDone)
             .addItem(mediumWell)
             .addItem(rare)
-            .build()
+            .build())
 
-        val menu = Menu
 
-        val steak = Food("Steak",15.0,ProductTag.MAIN,true)
-        steak.addModifier(modifier1)
+
+        val steakId = menu.insertMenu(Food("Steak",15.0,ProductTag.MAIN,true))
+        val steak = menu.getProduct(steakId) as Food
         steak.addModifier(modifier2)
+        steak.addModifier(modifier1)
 
-        val foodObject = FoodObject("MA-0")
+        val foodObject1 = FoodObject(steakId)
+        foodObject1.addItem(wellDone,modifier1)
+        foodObject1.addItem(withSides,modifier2)
 
         val order1 = Order("O-1")
+        order1.addToOrder(foodObject1,1)
+
+        val order1total = order1.foodSubtotal.value
+        Log.d("MainActivity",(order1total.toString() + print1(order1.orderList)))
 
 //        modifier1.selectItem(mediumWell)
 //        Log.d("MainActivity","Steak price = ${steak.totalPrice.value}")
@@ -90,11 +93,11 @@ class MainActivity : AppCompatActivity() {
 ////        modifier1.deselectItem(mediumWell)
 //        Log.d("MainActivity","Steak price = ${steak.totalPrice.value}")
 
-        val moshi : Moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .add(ModifierJsonAdapter())
-            .build()
-        val jsonAdapter : JsonAdapter<Food> = moshi.adapter<Food>()
+//        val moshi : Moshi = Moshi.Builder()
+//            .add(KotlinJsonAdapterFactory())
+//            .add(ModifierJsonAdapter())
+//            .build()
+//        val jsonAdapter : JsonAdapter<Food> = moshi.adapter<Food>()
 
 //        val json: String = jsonAdapter.toJson(steak)
 //        Log.d("MainActivity",json)
@@ -120,6 +123,12 @@ class MainActivity : AppCompatActivity() {
 //            }
 //
 //        })
+    }
+
+    fun print1(i : HashMap<FoodObject,Int>):String{
+        var a = ""
+        i.keys.forEach { a.plus(it.food.name + it.food.modifierList) }
+        return a
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

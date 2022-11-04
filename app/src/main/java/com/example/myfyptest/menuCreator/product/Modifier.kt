@@ -27,8 +27,8 @@ class Modifier(var name : String ,
     val isRequired : Boolean
         get() = _isRequired
 
-    fun addItem(item: ModifierItem) : Modifier {
-        _modifierList.add(menu.insertModifierItem(item))
+    fun addItem(itemId: String) : Modifier {
+        _modifierList.add(itemId)
         return this
     }
 
