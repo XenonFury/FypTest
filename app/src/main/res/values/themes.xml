@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.MyFYPTest" parent="Base.Theme.MyFYPTest" />
+    <style name="Theme.MyFYPTest.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.MyFYPTest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.MyFYPTest.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

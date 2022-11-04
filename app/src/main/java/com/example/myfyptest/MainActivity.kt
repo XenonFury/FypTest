@@ -1,5 +1,6 @@
 package com.example.myfyptest
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
@@ -13,18 +14,15 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.myfyptest.databinding.ActivityMainBinding
 import com.example.myfyptest.menuCreator.product.*
-import com.example.myfyptest.menuCreator.product.adapters.ModifierJsonAdapter
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var materialToolbar: MaterialToolbar
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        materialToolbar = binding.toolbar
         setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -44,6 +43,17 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAnchorView(R.id.fab)
                 .setAction("Action", null).show()
+        }
+
+        materialToolbar.setOnMenuItemClickListener{
+            when (it.itemId) {
+                R.id.action_product_creator -> {
+                    val intent = Intent(applicationContext, MenuCreatorActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
         }
 
         val menu = Menu
