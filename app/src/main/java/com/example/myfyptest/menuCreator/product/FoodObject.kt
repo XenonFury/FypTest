@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 class FoodObject (private val foodId : String) : MenuInterface{
 
     @Transient
-    private lateinit var menu : Menu
+    private lateinit var menu : ProductDatabase
 
     private lateinit var _modifierItemList : MutableList<String>
 
@@ -31,7 +31,7 @@ class FoodObject (private val foodId : String) : MenuInterface{
     }
 
     override fun setMenuDatabase() {
-        menu = Menu
+        menu = ProductDatabase
     }
 
     fun addItem(itemId : String, modifierId: String) : Boolean{

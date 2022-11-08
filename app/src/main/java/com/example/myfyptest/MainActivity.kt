@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val menu = Menu
+        val menu = ProductDatabase
 
         val database = Firebase.database("https://test-1d074-default-rtdb.asia-southeast1.firebasedatabase.app/")
         val myRef = database.getReference("messages")
@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val steakId = menu.insertMenu(Food("Steak",15.0,ProductTag.MAIN,true))
+        menu.insertMenu(Food("Tea",2.0, ProductTag.BEVERAGE,false))
         val steak = menu.getProduct(steakId) as Food
         steak.addModifier(modifier2)
         steak.addModifier(modifier1)

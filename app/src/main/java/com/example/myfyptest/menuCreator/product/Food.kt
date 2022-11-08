@@ -40,10 +40,10 @@ class Food(name: String,
         get() = _modifierList
 
     @Transient
-    private lateinit var menu : Menu
+    private lateinit var menu : ProductDatabase
 
     override fun setMenuDatabase() {
-        menu = Menu
+        menu = ProductDatabase
     }
 
     init {

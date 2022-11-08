@@ -1,11 +1,14 @@
 package com.example.myfyptest.menuCreator.product
 
 //Menu is the product database
-object Menu {
+object ProductDatabase {
     private val productDatabase : HashMap<String,in Product> = hashMapOf()
     private val modifierDatabase = hashMapOf<String,Modifier>()
     private val modifierItemDatabase = hashMapOf<String,ModifierItem>()
 
+    fun getFoodDataset() : List<Food>{
+        return productDatabase.values.toList() as List<Food>
+    }
 
     fun insertMenu(product : Food) : String{
         val id = product.productTag.tagIdHeader + "-" + productDatabase.size

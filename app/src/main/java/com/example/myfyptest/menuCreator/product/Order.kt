@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class Order (orderId : String) : MenuInterface {
-    private lateinit var menu : Menu
+    private lateinit var menu : ProductDatabase
     private val _orderList : HashMap<FoodObject,Int> =  hashMapOf()
     val orderList : HashMap<FoodObject,Int>
         get() = _orderList
@@ -18,7 +18,7 @@ class Order (orderId : String) : MenuInterface {
         }
 
     override fun setMenuDatabase() {
-        menu = Menu
+        menu = ProductDatabase
     }
 
     fun addToOrder(product : FoodObject,quantity : Int){

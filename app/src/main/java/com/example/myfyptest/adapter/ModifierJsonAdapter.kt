@@ -1,11 +1,9 @@
-package com.example.myfyptest.menuCreator.product.adapters
+package com.example.myfyptest.adapter
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.myfyptest.menuCreator.product.Modifier
 import com.example.myfyptest.menuCreator.product.ModifierItem
 import com.squareup.moshi.FromJson
-import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
 
 class ModifierJsonAdapter {

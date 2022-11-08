@@ -3,7 +3,6 @@ package com.example.myfyptest.menuCreator.product
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.squareup.moshi.JsonClass
-import com.squareup.moshi.ToJson
 
 @JsonClass(generateAdapter = true)
 class Modifier(var name : String ,
@@ -13,7 +12,7 @@ class Modifier(var name : String ,
     private var _modifierList = mutableListOf<String>()
 
     @Transient
-    private lateinit var menu : Menu
+    private lateinit var menu : ProductDatabase
 
     @Transient
     private var _selected = MutableLiveData<MutableList<String>>(mutableListOf())
@@ -72,7 +71,7 @@ class Modifier(var name : String ,
     }
 
     override fun setMenuDatabase() {
-        menu = Menu
+        menu = ProductDatabase
     }
 
 }
