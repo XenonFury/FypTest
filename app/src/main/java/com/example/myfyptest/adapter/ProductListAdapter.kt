@@ -30,9 +30,7 @@ class ProductListAdapter(
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val current = dataset[position]
-//        holder.itemView.setOnClickListener {
-//            onItemClicked(current)
-//        }
+
         holder.bind(current, context)
     }
 

@@ -11,11 +11,11 @@
         android:label="fragment_menu_creator_product_list"
         tools:layout="@layout/fragment_menu_creator_product_list" >
         <action
-            android:id="@+id/action_menuCreatorProductListFragment_to_customDialogFragment"
-            app:destination="@id/customDialogFragment" />
+            android:id="@+id/action_menuCreatorProductListFragment_to_addNewItemDialogFragment"
+            app:destination="@id/addNewItemDialogFragment" />
     </fragment>
     <dialog
-        android:id="@+id/customDialogFragment"
-        android:name="com.example.myfyptest.CustomDialogFragment"
-        android:label="CustomDialogFragment" />
+        android:id="@+id/addNewItemDialogFragment"
+        android:name="com.example.myfyptest.AddNewItemDialogFragment"
+        android:label="AddNewItemDialogFragment" />
 </navigation>

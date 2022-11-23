@@ -63,10 +63,6 @@ class MenuCreatorProductListFragment : Fragment() {
         _binding = null
     }
 
-    fun addProduct(){
-        findNavController().navigate(R.id.action_menuCreatorProductListFragment_to_customDialogFragment)
-    }
-
     companion object {
         /**
          * Use this factory method to create a new instance of

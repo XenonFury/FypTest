@@ -36,6 +36,10 @@ object ProductDatabase {
         return modifierDatabase[keyId]
     }
 
+    fun getModifierList() : List<String>{
+        return modifierDatabase.keys.toList()
+    }
+
     fun getModifierItem(keyId : String) : ModifierItem?{
         return modifierItemDatabase[keyId]
     }
