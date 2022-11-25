@@ -3,19 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/menu_creator_nav_graph"
-    app:startDestination="@id/menuCreatorProductListFragment">
+    app:startDestination="@id/menuCreatorTabFragment2">
 
-    <fragment
-        android:id="@+id/menuCreatorProductListFragment"
-        android:name="com.example.myfyptest.MenuCreatorProductListFragment"
-        android:label="fragment_menu_creator_product_list"
-        tools:layout="@layout/fragment_menu_creator_product_list" >
-        <action
-            android:id="@+id/action_menuCreatorProductListFragment_to_addNewItemDialogFragment"
-            app:destination="@id/addNewItemDialogFragment" />
-    </fragment>
     <dialog
         android:id="@+id/addNewItemDialogFragment"
-        android:name="com.example.myfyptest.AddNewItemDialogFragment"
+        android:name="com.example.myfyptest.menuCreator.fragments.AddNewItemDialogFragment"
         android:label="AddNewItemDialogFragment" />
+    <fragment
+        android:id="@+id/viewProductFragment"
+        android:name="com.example.myfyptest.menuCreator.fragments.ViewProductFragment"
+        android:label="fragment_view_product"
+        tools:layout="@layout/fragment_view_product" >
+        <argument
+            android:name="fId"
+            app:argType="string" />
+        <argument
+            android:name="type"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/menuCreatorTabFragment2"
+        android:name="com.example.myfyptest.menuCreator.fragments.MenuCreatorTabFragment"
+        android:label="MenuCreatorTabFragment" >
+        <action
+            android:id="@+id/action_menuCreatorTabFragment2_to_viewProductFragment"
+            app:destination="@id/viewProductFragment" />
+    </fragment>
 </navigation>

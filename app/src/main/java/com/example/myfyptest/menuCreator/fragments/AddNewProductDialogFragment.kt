@@ -1,26 +1,22 @@
-package com.example.myfyptest
+package com.example.myfyptest.menuCreator.fragments
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.children
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.example.myfyptest.R
+import com.example.myfyptest.databinding.AddEditDialogComponentBinding
 import com.example.myfyptest.databinding.AddNewItemDialogFragmentBinding
 import com.example.myfyptest.model.AddMenuViewModel
-import com.google.android.material.snackbar.Snackbar
 import java.util.TreeSet
 
 const val TAG = "MenuDialogFragment"
@@ -28,6 +24,8 @@ const val TAG = "MenuDialogFragment"
 class AddNewItemDialogFragment : DialogFragment() {
     private var _binding: AddNewItemDialogFragmentBinding? = null
     private val binding get() = _binding!!
+    private var _includeBinding: AddEditDialogComponentBinding? = null
+    private val includeBinding get() = _includeBinding!!
     private val viewModel: AddMenuViewModel by viewModels()
 
     private lateinit var checkedItems : BooleanArray
@@ -42,9 +40,10 @@ class AddNewItemDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val rootView: View = inflater.inflate(R.layout.add_new_item_dialog_fragment, container, false)
+        val includeView: View = inflater.inflate(R.layout.add_edit_dialog_component, container, false)
 
         _binding = AddNewItemDialogFragmentBinding.inflate(inflater,container,false)
+        _includeBinding = binding.addEditComponent
 
         setHasOptionsMenu(true)
         return binding.root
@@ -66,18 +65,18 @@ class AddNewItemDialogFragment : DialogFragment() {
         }
         Log.d(TAG,"view created")
         binding.toolbar.title = "Add new food"
-        binding.addModifierButton.setOnClickListener{
+        includeBinding.addModifierButton.setOnClickListener{
             handleAddModifier()
         }
-        binding.resetButton.setOnClickListener{
+        includeBinding.resetButton.setOnClickListener{
             resetField()
             Toast.makeText(requireContext(),"All field are reset",Toast.LENGTH_SHORT).show()
             Log.d(TAG,"reset button Pressed")
         }
-        binding.modifierSwitch.isChecked = false
+        includeBinding.modifierSwitch.isChecked = false
         modifierLayoutEnabler(false)
-        binding.modifierSwitch.setOnClickListener{
-            if (binding.modifierSwitch.isChecked){
+        includeBinding.modifierSwitch.setOnClickListener{
+            if (includeBinding.modifierSwitch.isChecked){
                 modifierLayoutEnabler(true)
             }
             else{
@@ -122,31 +121,31 @@ class AddNewItemDialogFragment : DialogFragment() {
     }
 
     private fun modifierLayoutEnabler(boolean: Boolean){
-        binding.addModifierButton.isEnabled  = boolean
-        for (i in 0  until binding.modifiersLinearLayout.childCount){
-            val child: View = binding.modifiersLinearLayout.getChildAt(i)
+        includeBinding.addModifierButton.isEnabled  = boolean
+        for (i in 0  until includeBinding.modifiersLinearLayout.childCount){
+            val child: View = includeBinding.modifiersLinearLayout.getChildAt(i)
             child.findViewById<ImageButton>(R.id.remove_button).isEnabled = boolean
             child.isEnabled = boolean
         }
-        binding.modifiersLinearLayout.isEnabled = boolean
+        includeBinding.modifiersLinearLayout.isEnabled = boolean
 
     }
 
     private fun addModifierRow(string: String){
         if (!modifierLayoutChildren.containsValue(string)) {
-            val index = binding.modifiersLinearLayout.childCount
+            val index = includeBinding.modifiersLinearLayout.childCount
             val inflater = layoutInflater.inflate(R.layout.row_add_modifier, null)
             inflater.findViewById<TextView>(R.id.modifier_name_textView).text = viewModel.getModifier(string)?.name
             inflater.findViewById<ImageButton>(R.id.remove_button).setOnClickListener{
                 checkedItems[modifierList.indexOf(string)] = false
                 modifierLayoutChildren.remove(index)
-                binding.modifiersLinearLayout.removeView(inflater)
+                includeBinding.modifiersLinearLayout.removeView(inflater)
             }
-            binding.modifiersLinearLayout.addView(inflater,index)
+            includeBinding.modifiersLinearLayout.addView(inflater,index)
             modifierLayoutChildren[index] = string
         }
 
-        Log.d(TAG,"Child count ${binding.modifiersLinearLayout.childCount}")
+        Log.d(TAG,"Child count ${includeBinding.modifiersLinearLayout.childCount}")
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -183,10 +182,11 @@ class AddNewItemDialogFragment : DialogFragment() {
     }
 
     private fun resetField(){
-        binding.productNameEditText.text = null
-        binding.productPriceEditText.text = null
-        binding.modifierSwitch.isChecked = false
-        binding.modifiersLinearLayout.removeAllViews()
+        includeBinding.productNameEditText.text = null
+        includeBinding.productPriceEditText.text = null
+        includeBinding.modifierSwitch.isChecked = false
+        includeBinding.productDescriptionEditText.text =null
+        includeBinding.modifiersLinearLayout.removeAllViews()
         modifierLayoutChildren.clear()
         for(i in checkedItems.indices){
             checkedItems[i] = false
@@ -195,10 +195,11 @@ class AddNewItemDialogFragment : DialogFragment() {
     }
 
     private fun saveFoodInfo(){
-        viewModel.setName(binding.productNameEditText.text.toString())
-        viewModel.setPrice(binding.productPriceEditText.text.toString().toDouble())
-        viewModel.setModifiable(binding.modifierSwitch.isChecked)
-        if (binding.modifierSwitch.isChecked){
+        viewModel.setName(includeBinding.productNameEditText.text.toString())
+        viewModel.setPrice(includeBinding.productPriceEditText.text.toString().toDouble())
+        viewModel.setDescription(includeBinding.productDescriptionEditText.text.toString())
+        viewModel.setModifiable(includeBinding.modifierSwitch.isChecked)
+        if (includeBinding.modifierSwitch.isChecked){
             for (i in checkedItems.indices){
                 viewModel.addModifier(modifierList[i])
             }
@@ -213,6 +214,7 @@ class AddNewItemDialogFragment : DialogFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        _includeBinding = null
         _binding = null
     }
 }

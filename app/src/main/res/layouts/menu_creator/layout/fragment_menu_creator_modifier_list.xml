@@ -4,16 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".menuCreator.fragments.MenuCreatorProductListFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".menuCreator.fragments.MenuCreatorModifierListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/product_list_recycler_view"
+        android:id="@+id/modifier_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_gravity="start"/>
-
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </FrameLayout>

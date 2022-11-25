@@ -1,6 +1,7 @@
 package com.example.myfyptest.menuCreator.product
 
 import android.util.Log
+import java.util.*
 
 const val TAG = "Food Class"
 
@@ -29,15 +30,17 @@ class Food(name: String,
     val productTag : ProductTag
         get() = _productTag
 
+    var description : String? = null
+
     private var _allTimeSales: Int = 0
     val allTimeSales : Int
         get() = _allTimeSales
     private var _isModifiable:Boolean = isModifiable
     val isModifiable : Boolean
         get() = _isModifiable
-    private var _modifierList : MutableList<String>? = null
+    private var _modifierList : TreeSet<String>? = null
     val modifierList : List<String>?
-        get() = _modifierList
+        get() = _modifierList!!.toList()
 
     @Transient
     private lateinit var menu : ProductDatabase
@@ -49,7 +52,7 @@ class Food(name: String,
     init {
         setMenuDatabase()
         if (_isModifiable)
-            _modifierList = mutableListOf<String>()
+            _modifierList = TreeSet<String>()
     }
 
     fun addModifier(modifierId : String){

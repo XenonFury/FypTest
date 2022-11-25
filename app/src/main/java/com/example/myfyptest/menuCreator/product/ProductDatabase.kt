@@ -6,8 +6,12 @@ object ProductDatabase {
     private val modifierDatabase = hashMapOf<String,Modifier>()
     private val modifierItemDatabase = hashMapOf<String,ModifierItem>()
 
-    fun getFoodDataset() : List<Food>{
-        return productDatabase.values.toList() as List<Food>
+    fun getFoodDataset() : HashMap<String, in Product> {
+        return productDatabase
+    }
+
+    fun getModifierDataset() : HashMap<String, Modifier> {
+        return modifierDatabase
     }
 
     fun insertMenu(product : Food) : String{

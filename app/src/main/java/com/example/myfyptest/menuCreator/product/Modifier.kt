@@ -3,13 +3,16 @@ package com.example.myfyptest.menuCreator.product
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.squareup.moshi.JsonClass
+import java.util.TreeSet
 
 @JsonClass(generateAdapter = true)
 class Modifier(var name : String ,
                private var _isMultipleChoice : Boolean,
                private var _isRequired : Boolean) : MenuInterface {
 
-    private var _modifierList = mutableListOf<String>()
+    private var _modifierList = TreeSet<String>()
+    val modifierList:TreeSet<String>
+        get() = _modifierList
 
     @Transient
     private lateinit var menu : ProductDatabase

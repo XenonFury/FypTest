@@ -12,6 +12,7 @@ import kotlin.properties.Delegates
 class AddMenuViewModel : ViewModel() {
     private lateinit var name : String
     private var price = 0.0
+    private var description = ""
     private var productTag = ProductTag.MAIN
     private var isModifiable = false
     private val menu = ProductDatabase
@@ -27,6 +28,10 @@ class AddMenuViewModel : ViewModel() {
     fun setPrice(p: Double){
         if (p < 0.0) throw IllegalArgumentException("Price must not be negative!")
         price = p
+    }
+
+    fun setDescription(desc : String){
+        description = desc
     }
 
     fun setModifiable(boolean: Boolean){
@@ -51,9 +56,13 @@ class AddMenuViewModel : ViewModel() {
 
     fun createFood(){
         val newFood = Food(name,price,productTag,isModifiable)
+        newFood.description = description
+        if(isModifiable){
+            for (i in modifierList)
+                newFood.addModifier(i)
+        }
         menu.insertMenu(newFood)
     }
-
 
 
 }
